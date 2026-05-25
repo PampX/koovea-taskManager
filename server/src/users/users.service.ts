@@ -27,4 +27,8 @@ export class UsersService {
   async findAll(): Promise<UserDocument[]> {
     return this.userModel.find({}, { password: 0 });
   }
+
+  async findById(id: string): Promise<UserDocument | null> {
+    return this.userModel.findById(id, { password: 0 });
+  }
 }
