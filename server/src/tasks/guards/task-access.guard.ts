@@ -20,7 +20,10 @@ export class TaskAccessGuard implements CanActivate {
     const userId = request.user.id;
     const taskId = request.params.id;
 
-    const task = await this.taskModel.findById(taskId);
+    const task = await this.taskModel
+      .findById(taskId)
+      .populate('owner', 'name email')
+      .populate('assignees', 'name email');
     if (!task) throw new NotFoundException('Tâche introuvable');
 
     const isOwner = task.owner.toString() === userId;

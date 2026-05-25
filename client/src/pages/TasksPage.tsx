@@ -53,7 +53,12 @@ function TasksPage() {
     setSelectedTask(null);
   }, []);
 
-  const handleSubmit = useCallback(async (data: any) => {
+  const handleSubmit = useCallback(async (data: Partial<{
+  title: string;
+  description?: string;
+  status?: 'todo' | 'in_progress' | 'done';
+  assignees?: string[];
+}>) => {
     if (selectedTask) {
       await updateTask(selectedTask._id, data);
     } else {
