@@ -20,7 +20,7 @@ Le backend est construit avec NestJS et MongoDB, le frontend avec React + Vite. 
 
 **Frontend**
 
-- React 18 + TypeScript
+- React 19 + TypeScript
 - Vite
 - MUI (Material UI)
 - react-hook-form
@@ -67,7 +67,32 @@ PORT=3000
 
 ---
 
-## 5. Architecture backend
+## 5. Lancer avec Docker
+
+Prérequis : Docker Desktop installé et lancé.
+
+```bash
+# À la racine du projet
+docker-compose up --build
+```
+
+Le serveur sera accessible sur http://localhost:3000.
+
+Pour arrêter :
+
+```bash
+docker-compose down
+```
+
+### Ce qui est dockerisé
+
+Seul le serveur NestJS est dockerisé, conformément aux spécifications du sujet. Le frontend se lance toujours avec `npm run dev`.
+
+En production, le frontend pourrait être dockerisé via un build multi-stage : Node pour compiler avec Vite, puis Nginx pour servir les fichiers statiques générés. Les variables d'environnement Vite devant être intégrées au moment du build (pas au runtime), cela nécessiterait des build args Docker.
+
+---
+
+## 6. Architecture backend
 
 Le projet suit l'architecture modulaire de NestJS, organisée en 3 modules : **Auth**, **Users** et **Tasks**. Chaque module encapsule son Controller, son Service, ses DTOs et ses Schemas Mongoose.
 
@@ -79,7 +104,7 @@ Les règles d'autorisation sont gérées par des Guards personnalisés :
 
 ---
 
-## 6. Endpoints API
+## 7. Endpoints API
 
 | Méthode | Route | Auth | Description |
 |---|---|---|---|
@@ -95,7 +120,7 @@ Les règles d'autorisation sont gérées par des Guards personnalisés :
 
 ---
 
-## 7. Choix techniques
+## 8. Choix techniques
 
 - **MongoDB Atlas** : base de données cloud, pas d'installation locale requise. Le free tier est suffisant pour ce projet.
 - **JWT en localStorage** : choix pragmatique pour ce test technique. En production, un cookie `httpOnly` serait préférable pour se protéger contre les attaques XSS.
@@ -106,17 +131,16 @@ Les règles d'autorisation sont gérées par des Guards personnalisés :
 
 ---
 
-## 8. Ce qui pourrait être amélioré
+## 9. Ce qui pourrait être amélioré
 
 - Tests unitaires sur les Services et Guards (logique métier et règles d'autorisation)
 - Validation des variables d'environnement au démarrage avec un schema class-validator
 - Refresh token pour renouveler le JWT sans re-authentification
 - Pagination sur `GET /tasks` pour les grandes listes
-- Docker pour containeriser le backend (bonus non implémenté)
 - Déploiement AWS (bonus non implémenté)
 
 ---
 
-## 9. Auteur
+## 10. Auteur
 
 Timothée Baudequin — 25/05/2026
